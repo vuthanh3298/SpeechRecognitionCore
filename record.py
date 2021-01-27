@@ -24,7 +24,7 @@ def noise_reduce(snd_data):
     reduced_noise = nr.reduce_noise(audio_clip=data_numpy.astype('float32'), noise_clip=data_numpy.astype('float32'))
     # reduced_noise = nr.reduce_noise(audio_clip=reduced_noise.astype('float32'), noise_clip=reduced_noise.astype('float32'))
 
-    wav.write("test_files/reduced-noise.wav", RATE, reduced_noise.astype("int16"))
+    #wav.write("test_files/reduced-noise.wav", RATE, reduced_noise.astype("int16"))
     return np.asarray(reduced_noise)
 
 
@@ -113,18 +113,10 @@ def record():
 
     # noise reduce
     r = normalize(r)
-
-    r2 = noise_reduce(r)
-    r2 = trim(r2)
-
-
-
-    # r = normalize(r)
+    r = noise_reduce(r)
     r = trim(r)
 
-    
-
-    return sample_width, r, r2
+    return sample_width, r
 
 
 
@@ -132,22 +124,14 @@ def record():
 
 def record_to_file(path):
     "Records from the microphone and outputs the resulting data to 'path'"
-    sample_width, data, data2 = record()
+    sample_width, data= record()
     data = pack('<' + ('h'*len(data)), *data)
-    data2 = pack('<' + ('h'*len(data2)), *data2)
 
     wf = wave.open(path, 'wb')
     wf.setnchannels(1)
     wf.setsampwidth(sample_width)
     wf.setframerate(RATE)
     wf.writeframes(data)
-    wf.close()
-
-    wf = wave.open(path+"2", 'wb')
-    wf.setnchannels(1)
-    wf.setsampwidth(sample_width)
-    wf.setframerate(RATE)
-    wf.writeframes(data2)
     wf.close()
 
 
