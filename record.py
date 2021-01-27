@@ -10,7 +10,7 @@ import scipy.io.wavfile as wav
 import pyaudio
 import wave
 
-THRESHOLD = 2500
+THRESHOLD = 1500
 CHUNK_SIZE = 1024
 FORMAT = pyaudio.paInt16
 RATE = 8000
