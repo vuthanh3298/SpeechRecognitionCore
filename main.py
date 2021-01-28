@@ -6,7 +6,7 @@ import scipy.io.wavfile as wav
 import playsound as plsnd
 import requests as req
 
-HOST = "http://192.168.1.8:3000"
+HOST = "http://192.168.137.163:3000"
 
 
 if __name__ == '__main__':
@@ -36,17 +36,17 @@ if __name__ == '__main__':
             res = feedToNetwork(inputArray,testNet)
 
             if res == 1:
-                req.get(HOST + "/light?data=1")
+                req.get(HOST + "/loa?data=1")
                 plsnd.playsound("speak_out_files/dabatden.wav")
 
             elif res == 2:
-                req.get(HOST + "/light?data=2")
+                req.get(HOST + "/loa?data=2")
                 plsnd.playsound("speak_out_files/dabatquat.wav")
 
             elif res == 3:
-                req.get(HOST + "/light?data=3")
+                req.get(HOST + "/loa?data=3")
                 plsnd.playsound("speak_out_files/datatden.wav")
 
             elif res == 4:
-                req.get(HOST + "/light?data=4")
+                req.get(HOST + "/loa?data=4")
                 plsnd.playsound("speak_out_files/datatquat.wav")

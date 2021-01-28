@@ -10,7 +10,7 @@ import scipy.io.wavfile as wav
 import pyaudio
 import wave
 
-THRESHOLD = 1500
+THRESHOLD = 2200
 CHUNK_SIZE = 1024
 FORMAT = pyaudio.paInt16
 RATE = 8000
@@ -45,7 +45,7 @@ def trim(snd_data):
         r = array('h')
 
         for i in snd_data:
-            if not snd_started and abs(i)> (THRESHOLD - 500):
+            if not snd_started and abs(i) > THRESHOLD:
                 snd_started = True
                 r.append(i)
 
@@ -113,7 +113,7 @@ def record():
 
     # noise reduce
     r = normalize(r)
-    r = noise_reduce(r)
+    # r = noise_reduce(r)
     r = trim(r)
 
     return sample_width, r
