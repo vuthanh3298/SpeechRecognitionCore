@@ -4,13 +4,15 @@ from struct import pack
 import noise_reduce_core as nr
 import numpy as np
 
+import time
+
 import scipy.io.wavfile as wav
 
 
 import pyaudio
 import wave
 
-THRESHOLD = 2200
+THRESHOLD = 1300
 CHUNK_SIZE = 1024
 FORMAT = pyaudio.paInt16
 RATE = 8000
@@ -88,6 +90,8 @@ def record():
     snd_started = False
 
     r = array('h')
+    
+    start = time.time()
 
     while 1:
         # little endian, signed short
@@ -102,6 +106,13 @@ def record():
             num_silent += 1
         elif not silent and not snd_started:
             snd_started = True
+            start = time.time()
+
+        if snd_started:
+            now = time.time()
+            print(now - start)
+            if now - start > 0.8:
+                break
 
         if snd_started and num_silent > 20:
             break
@@ -113,7 +124,7 @@ def record():
 
     # noise reduce
     r = normalize(r)
-    # r = noise_reduce(r)
+    r = noise_reduce(r)
     r = trim(r)
 
     return sample_width, r

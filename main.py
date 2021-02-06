@@ -6,7 +6,7 @@ import scipy.io.wavfile as wav
 import playsound as plsnd
 import requests as req
 
-HOST = "http://192.168.137.163:3000"
+HOST = "http://192.168.0.103:3000"
 
 
 if __name__ == '__main__':
